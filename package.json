@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,9 +20,11 @@
   "homepage": "https://github.com/esjay/gifsync#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "youtube-player": "^3.0.4"
   },
   "devDependencies": {
+    "html-webpack-plugin": "^2.22.0",
     "webpack-dev-server": "^1.14.1"
   }
 }
