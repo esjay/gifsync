@@ -33,38 +33,44 @@
               for (let p of searchParams) {
                 console.log(p);
               }
-              var videoId, thumbUrl, webmUrl, mp4Url;
-              if(searchParams.get("gfycat")) {
-                videoId = searchParams.get("gfycat");
-                thumbUrl = 'https://thumbs.gfycat.com/'+videoId+'-poster.jpg';
-                webmUrl = 'https://giant.gfycat.com/'+videoId+'.webm';
-                mp4Url = 'https://giant.gfycat.com/'+videoId+'.mp4';
-              }
+
               var audioId = searchParams.get('v'),
                   audioStartTime = parseFloat(searchParams.get('s')),
                   audioEndTime = parseFloat(searchParams.get('e'));
 
               console.log('audioEndTime', audioEndTime);
 
+              var videoId, thumbUrl, webmUrl, mp4Url;
+
               var videoPlayer = document.createElement('video');
-              videoPlayer.setAttribute('poster', thumbUrl)
               videoPlayer.setAttribute('muted', '')
               videoPlayer.setAttribute('loop', '');
 
-              var webmSource = document.createElement('source');
-              webmSource.setAttribute('src', webmUrl);
-              webmSource.setAttribute('type', 'video/webm');
+              if(searchParams.get("gfycat")) {
+                var subdomains = ['zippy', 'fat', 'giant'],
+                    extensions = ['webm', 'mp4'];
+                videoId = searchParams.get("gfycat");
 
-              var mp4Source = document.createElement('source');
-              mp4Source.setAttribute('src', mp4Url);
-              mp4Source.setAttribute('type', 'video/mp4');
+                thumbUrl = '//thumbs.gfycat.com/'+videoId+'-poster.jpg';
+
+                extensions.forEach(function(ext) {
+                  subdomains.forEach(function(sd) {
+                    var sourceUrl = '//' + sd + '.gfycat.com/' + videoId + '.' + ext;
+                    var sourceElement = document.createElement('source');
+                    sourceElement.setAttribute('src', sourceUrl);
+                    sourceElement.setAttribute('type', 'video/' + ext);
+
+                    videoPlayer.appendChild(sourceElement);
+                  })
+                });
+              }
 
               var fallbackImage = document.createElement('img')
               fallbackImage.setAttribute('title', "Sorry, your browser doesn't support HTML5 video.");
-              fallbackImage.setAttribute('src', "https://thumbs.gfycat.com/TestyDimHydra-poster.jpg");
+              fallbackImage.setAttribute('src', '//thumbs.gfycat.com/'+ videoId +'-poster.jpg');
 
-              videoPlayer.appendChild(webmSource);
-              videoPlayer.appendChild(mp4Source);
+              videoPlayer.setAttribute('poster', thumbUrl);
+              videoPlayer.appendChild(fallbackImage);
 
               document.querySelector('#videoContainer').appendChild(videoPlayer);
 
