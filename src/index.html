@@ -16,13 +16,7 @@
         <link rel="stylesheet" href="styles/style.css">
     </head>
     <body>
-        <div class="container">
-            <video id="visual" poster="https://thumbs.gfycat.com/TestyDimHydra-poster.jpg" muted="" loop="">
-              <source id="webmSource" src="https://giant.gfycat.com/TestyDimHydra.webm" type="video/webm">
-              <source id="mp4Source" src="https://giant.gfycat.com/TestyDimHydra.mp4" type="video/mp4">
-              <img title="Sorry, your browser doesn't support HTML5 video." src="https://thumbs.gfycat.com/TestyDimHydra-poster.jpg">
-            </video>
-        </div>
+        <div id="videoContainer"></div>
 
         <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
         <div id="player"></div>
@@ -31,10 +25,52 @@
             // (function() {
               'use strict';
 
+              var paramsString = location.search || '?gfycat=AnotherGrandAntarcticfurseal&v=BmPFioq1l6o&s=37&e=89';
+              console.log('Location', location.search)
+              var searchParams = new URLSearchParams(paramsString);
+
+              //Iterate the search parameters.
+              for (let p of searchParams) {
+                console.log(p);
+              }
+              var videoId, thumbUrl, webmUrl, mp4Url;
+              if(searchParams.get("gfycat")) {
+                videoId = searchParams.get("gfycat");
+                thumbUrl = 'https://thumbs.gfycat.com/'+videoId+'-poster.jpg';
+                webmUrl = 'https://giant.gfycat.com/'+videoId+'.webm';
+                mp4Url = 'https://giant.gfycat.com/'+videoId+'.mp4';
+              }
+              var audioId = searchParams.get('v'),
+                  audioStartTime = parseFloat(searchParams.get('s')),
+                  audioEndTime = parseFloat(searchParams.get('e'));
+
+              console.log('audioEndTime', audioEndTime);
+
+              var videoPlayer = document.createElement('video');
+              videoPlayer.setAttribute('poster', thumbUrl)
+              videoPlayer.setAttribute('muted', '')
+              videoPlayer.setAttribute('loop', '');
+
+              var webmSource = document.createElement('source');
+              webmSource.setAttribute('src', webmUrl);
+              webmSource.setAttribute('type', 'video/webm');
+
+              var mp4Source = document.createElement('source');
+              mp4Source.setAttribute('src', mp4Url);
+              mp4Source.setAttribute('type', 'video/mp4');
+
+              var fallbackImage = document.createElement('img')
+              fallbackImage.setAttribute('title', "Sorry, your browser doesn't support HTML5 video.");
+              fallbackImage.setAttribute('src', "https://thumbs.gfycat.com/TestyDimHydra-poster.jpg");
+
+              videoPlayer.appendChild(webmSource);
+              videoPlayer.appendChild(mp4Source);
+
+              document.querySelector('#videoContainer').appendChild(videoPlayer);
+
               var videoReady = false,
                   audioReady = false;
 
-              var videoPlayer = document.querySelector('#visual');
               videoPlayer.addEventListener('loadeddata', function() {
 
                 if(videoPlayer.readyState >= 2) {
@@ -44,6 +80,8 @@
                 }
 
               });
+              videoPlayer.addEventListener('pause', pauseBoth);
+              videoPlayer.addEventListener('play', attemptToPlayBoth);
 
               // 2. This code loads the IFrame Player API code asynchronously.
               var tag = document.createElement('script');
@@ -58,11 +96,20 @@
                   audioPlayer = new YT.Player('player', {
                       height: '320',
                       width: '460',
-                      videoId: 'vt1Pwfnh5pc',
+                      videoId: audioId,
                       // startSeconds: 6,
                       //endSeconds: 12,
                       // loop: true,
-                      playerVars: { 'autoplay': 0},//, 'controls': 0 },
+                      playerVars: {
+                        'autoplay': 0,
+                        'controls': 1,
+                        'loop': 1,
+                        'end': audioEndTime,
+                        'modestbranding': 1,
+                        'rel': 0,
+                        'showinfo': 0,
+
+                      },
                       events: {
                           'onReady': onPlayerReady,
                           'onStateChange': onPlayerStateChange
@@ -74,9 +121,9 @@
 
               // 4. The API will call this function when the video player is ready.
               function onPlayerReady(event) {
-                  audioPlayer.seekTo(2)
+                  audioPlayer.seekTo(audioStartTime);
                   // audioPlayer.playVideo()
-                  // audioPlayer.pauseVideo();
+                  audioPlayer.pauseVideo();
                   // event.target.playVideo();
                   // audioReady = true;
                   attemptToPlayBoth();
@@ -99,9 +146,19 @@
                       attemptToPlayBoth();
                       console.timeEnd('audioPlayer')
                   }
+
+                  if(event.data === YT.PlayerState.ENDED || (event.data === YT.PlayerState.PAUSED && audioPlayer.getCurrentTime() >= audioEndTime)) {
+                    audioPlayer.seekTo(audioStartTime);
+                  } else if(event.data === YT.PlayerState.PAUSED) {
+                    pauseBoth();
+                  }
               }
               function stopVideo() {
                   audioPlayer.stopVideo();
+              }
+              function pauseBoth() {
+                videoPlayer.pause();
+                audioPlayer.pauseVideo();
               }
 
               function attemptToPlayBoth() {
