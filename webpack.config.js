@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -6,10 +7,17 @@ module.exports = {
         path: './dist',
         filename: 'app.bundle.js'
     },
-    plugins: [new HtmlWebpackPlugin({
-      title: 'GifSync',
-      inject: 'body'
-    })],
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'GifSync',
+        inject: 'body'
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+          compress: {
+              warnings: false
+          }
+      })
+    ],
     devServer: {
       contentBase: '/dist'
     }
