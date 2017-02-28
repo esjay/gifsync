@@ -8,13 +8,22 @@ module.exports = {
         path: __dirname + '/dist',
         filename: 'app.bundle.js'
     },
+    devtool: "source-map",
     module: {
         rules: [
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract({
                     fallback: "style-loader",
-                    use: "css-loader!sass-loader",
+                    use: [{
+                            loader: "css-loader", options: {
+                                sourceMap: true
+                            }
+                        }, {
+                            loader: "sass-loader", options: {
+                                sourceMap: true
+                            }
+                        }]
                 }),
             }
         ]
