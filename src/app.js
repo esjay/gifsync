@@ -1,4 +1,5 @@
 'use strict';
+
 if (!window.location.search) {
   window.location.href = '?gfycat=AnotherGrandAntarcticfurseal&v=BmPFioq1l6o&s=37&e=89';
 } else {
@@ -72,7 +73,7 @@ function init(paramsString) {
 
     if (videoPlayer.readyState >= 2) {
       videoReady = true;
-      // videoPlayer.play();
+      playVideo();
       attemptToPlayBoth();
     }
 
@@ -119,8 +120,8 @@ function init(paramsString) {
 
   // 4. The API will call this function when the video player is ready.
   function onPlayerReady(event) {
-    // audioPlayer.seekTo(audioStartTime);
-    audioPlayer.playVideo()
+      // audioPlayer.seekTo(audioStartTime);
+    // playAudio()
       // audioPlayer.pauseVideo();
       // audioPlayer.playVideo();
       // audioReady = true;
@@ -136,7 +137,7 @@ function init(paramsString) {
     }
     if (event.data === YT.PlayerState.BUFFERING) {
       // audioReady = true;
-      audioPlayer.playVideo();
+      playAudio();
     }
 
     if (event.data === YT.PlayerState.PLAYING) {
@@ -152,27 +153,47 @@ function init(paramsString) {
     }
   }
 
+  function playVideo () {
+    videoPlayer.play();
+  }
+
+  function playAudio () {
+    audioPlayer.playVideo();
+  }
+
   function stopVideo() {
     audioPlayer.stopVideo();
   }
 
-  function pauseBoth() {
+  function pauseVideo () {
     videoPlayer.pause();
+  }
+
+  function pauseAudio () {
     audioPlayer.pauseVideo();
+  }
+
+  function pauseBoth () {
+    pauseVideo();
+    pauseAudio();
+  }
+
+  function playBoth() {
+    playVideo();
+    playAudio();
   }
 
   function attemptToPlayBoth() {
     console.log('videoReady', videoReady, 'audioReady', audioReady)
     if (videoReady && audioReady) {
-      videoPlayer.play();
-      audioPlayer.playVideo();
+      playBoth();
       console.time('audioPlayer');
     } else {
       if (audioReady) {
-        audioPlayer.pauseVideo();
+        pauseAudio();
       }
       if (videoReady) {
-        videoPlayer.pause();
+        pauseVideo();
       }
     }
   }
