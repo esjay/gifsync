@@ -43,11 +43,12 @@ module.exports = {
             filename: 'index.html',
             template: 'src/index.html'
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     },
+        //     sourceMap: true
+        // }),
         new ExtractTextPlugin("main.css")
     ],
     devServer: {
