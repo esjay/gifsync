@@ -1,22 +1,54 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: './src/app.js',
+    entry: ['./src/app.js', './src/styles/main.scss'],
     output: {
-        path: './dist',
+        path: __dirname + '/dist',
         filename: 'app.bundle.js'
     },
+    devtool: "source-map",
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [{
+                            loader: "css-loader", options: {
+                                sourceMap: true
+                            }
+                        }, {
+                            loader: "sass-loader", options: {
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                            plugins: function () {
+                                return [
+                                    require('autoprefixer')
+                                ];
+                            }
+                        }
+                    }]
+                }),
+            }
+        ]
+    },
     plugins: [
-      new HtmlWebpackPlugin({
-        title: 'GifSync',
-        inject: 'body'
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-          compress: {
-              warnings: false
-          }
-      })
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'src/index.html'
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        new ExtractTextPlugin("main.css")
     ],
     devServer: {
       contentBase: '/dist'

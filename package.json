@@ -23,12 +23,19 @@
   "homepage": "https://github.com/esjay/gifsync#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "webpack": "^1.13.1",
     "youtube-player": "^3.0.4"
   },
   "devDependencies": {
+    "autoprefixer": "^6.7.5",
+    "css-loader": "^0.26.2",
+    "extract-text-webpack-plugin": "^2.0.0",
     "html-webpack-plugin": "^2.22.0",
-    "webpack-dev-server": "^1.14.1",
-    "webpack-uglify-js-plugin": "^1.1.9"
+    "node-sass": "^4.5.0",
+    "postcss-loader": "^1.3.2",
+    "sass-loader": "^6.0.0",
+    "style-loader": "^0.13.1",
+    "uglify-loader": "^1.4.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.3.0"
   }
 }
