@@ -1,5 +1,9 @@
 'use strict';
 
+import SuperGif from "./lib/libgif";
+
+console.log(SuperGif);
+
 if (!window.location.search) {
   window.location.href = '?gfycat=AnotherGrandAntarcticfurseal&v=BmPFioq1l6o&s=37&e=89';
 } else {
@@ -8,29 +12,55 @@ if (!window.location.search) {
 
 function init(paramsString) {
   console.log('Location', paramsString);
-  var searchParams = new URLSearchParams(paramsString);
+  var searchParams = new URLSearchParams(paramsString),
+      param = searchParams.get.bind(searchParams);
 
-  //Iterate the search parameters.
-  // for (let p of searchParams) {
-  //   console.log(p);
-  // }
+  var body = document.querySelector('body');
 
-  var audioId = searchParams.get('v'),
-    audioStartTime = parseFloat(searchParams.get('s')),
-    audioEndTime = parseFloat(searchParams.get('e'));
+  // var videoContainer = document.createElement('div');
+  var videoContainer = document.querySelector('#videoContainer');
+  videoContainer.setAttribute('class', 'visual-container')
+  
+  // var audioContainerElement = document.createElement('div');
+  var audioContainerElement = document.querySelector('#audioContainer');
+  audioContainerElement.setAttribute('class', 'audible-container')
+  // audioContainerElement.setAttribute('id', 'audioContainer')
+
+  var audioId = param('v'),
+      audioStartTime = parseFloat(param('s')),
+      audioEndTime = parseFloat(param('e'));
 
   console.log('audioEndTime', audioEndTime);
 
-  var videoId, thumbUrl, webmUrl, mp4Url;
+  var videoId, thumbUrl, webmUrl, mp4Url, fallbackUrl;
 
   var videoPlayer = document.createElement('video');
   videoPlayer.setAttribute('muted', '')
   videoPlayer.setAttribute('loop', '');
 
-  if (searchParams.get("gfycat")) {
+  if (param('gif')) {
+    // ****** Any GIF Method ******
+
+    appendChildren();
+    appendFallbackImage(videoPlayer, param('gif'));
+
+    videoPlayer = new SuperGif({
+      gif: videoPlayer,
+      show_progress_bar: false,
+      auto_play: 0
+    } );
+    videoPlayer.load_url(param('gif'), attemptToPlayBoth);
+
+    // <a href="javascript:;" onmousedown="sup1.pause(); return false;">Pause</a> |
+    // <a href="javascript:;" onmousedown="sup1.play(); return false;">Play</a> |
+    // <a href="javascript:;" onmousedown="sup1.move_to(0); return false;">Restart</a> |
+
+  } else if (param("gfycat")) {
+    // ****** GfyCat Method ******
+
     var subdomains = ['zippy', 'fat', 'giant'],
-      extensions = ['webm', 'mp4'];
-    videoId = searchParams.get("gfycat");
+    extensions = ['webm', 'mp4'];
+    videoId = param("gfycat");
 
     thumbUrl = '//thumbs.gfycat.com/' + videoId + '-poster.jpg';
 
@@ -44,42 +74,30 @@ function init(paramsString) {
         videoPlayer.appendChild(sourceElement);
       })
     });
+
+    videoPlayer.setAttribute('poster', thumbUrl);
+  
+    appendChildren();
+    appendFallbackImage(videoPlayer, thumbUrl);
+    setVideoEventListeners(videoPlayer);
+  } else if (param('yt')) {
+    // ****** YouTube Visual Method ******
+
   }
 
-  var fallbackImage = document.createElement('img')
-  fallbackImage.setAttribute('title', "Sorry, your browser doesn't support HTML5 video.");
-  fallbackImage.setAttribute('src', '//thumbs.gfycat.com/' + videoId + '-poster.jpg');
+  function appendFallbackImage (videoPlayer, fallbackUrl) {
+    var fallbackImage;
 
-  videoPlayer.setAttribute('poster', thumbUrl);
-  videoPlayer.appendChild(fallbackImage);
+    fallbackImage = document.createElement('img')
+    fallbackImage.setAttribute('title', "Sorry, your browser doesn't support HTML5 video.");
+    fallbackImage.setAttribute('src', fallbackUrl);
+    videoPlayer.appendChild(fallbackImage);
 
-  var body = document.querySelector('body');
-
-  var videoContainer = document.createElement('div');
-  videoContainer.setAttribute('class', 'visual-container')
-  videoContainer.appendChild(videoPlayer);
-
-  var audioContainerElement = document.createElement('div');
-  audioContainerElement.setAttribute('class', 'audible-container')
-  audioContainerElement.setAttribute('id', 'audioContainer')
-
-  body.insertBefore(audioContainerElement, body.firstChild);
-  body.insertBefore(videoContainer, body.firstChild);
+    return fallbackImage;
+  }
 
   var videoReady = false,
-    audioReady = false;
-
-  videoPlayer.addEventListener('loadeddata', function () {
-
-    if (videoPlayer.readyState >= 2) {
-      videoReady = true;
-      playVideo();
-      attemptToPlayBoth();
-    }
-
-  });
-  videoPlayer.addEventListener('pause', pauseBoth);
-  videoPlayer.addEventListener('play', attemptToPlayBoth);
+      audioReady = false;
 
   // 2. This code loads the IFrame Player API code asynchronously.
   var tag = document.createElement('script');
@@ -121,7 +139,7 @@ function init(paramsString) {
   // 4. The API will call this function when the video player is ready.
   function onPlayerReady(event) {
       // audioPlayer.seekTo(audioStartTime);
-    // playAudio()
+    playAudio()
       // audioPlayer.pauseVideo();
       // audioPlayer.playVideo();
       // audioReady = true;
@@ -151,6 +169,27 @@ function init(paramsString) {
     } else if (event.data === YT.PlayerState.PAUSED) {
       pauseBoth();
     }
+  }
+
+  function appendChildren () {
+    videoContainer.appendChild(videoPlayer);
+
+    // body.insertBefore(audioContainerElement, body.firstChild);
+    // body.insertBefore(videoContainer, body.firstChild);
+  }
+
+  function setVideoEventListeners (videoPlayer) {
+    videoPlayer.addEventListener('loadeddata', function () {
+
+      if (videoPlayer.readyState >= 2) {
+        videoReady = true;
+        // playVideo();
+        attemptToPlayBoth();
+      }
+
+    });
+    videoPlayer.addEventListener('pause', pauseBoth);
+    videoPlayer.addEventListener('play', attemptToPlayBoth);
   }
 
   function playVideo () {

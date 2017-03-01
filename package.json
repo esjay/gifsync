@@ -23,6 +23,7 @@
   "homepage": "https://github.com/esjay/gifsync#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "gif-js": "^2.1.0",
     "youtube-player": "^3.0.4"
   },
   "devDependencies": {
