@@ -12,7 +12,7 @@
 ///  @include typography-hyphenation();
 
 
-@mixin typography-hyphenation() {
+@mixin typography-hyphenation($do: add) {
     word-break: break-word;
     hyphens: auto;
 }

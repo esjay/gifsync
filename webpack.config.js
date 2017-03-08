@@ -3,54 +3,51 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    entry: ['./src/app.js', './src/main.scss'],
-    output: {
-        path: __dirname + '/dist',
-        filename: 'app.bundle.js'
-    },
-    devtool: "source-map",
-    module: {
-        rules: [
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: [{
-                            loader: "css-loader", options: {
-                                sourceMap: true
-                            }
-                        }, {
-                            loader: "sass-loader", options: {
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                            plugins: function () {
-                                return [
-                                    require('autoprefixer')
-                                ];
-                            }
-                        }
-                    }]
-                }),
-            }
-        ]
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'src/index.html'
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new ExtractTextPlugin("main.css")
-    ],
-    devServer: {
-      contentBase: '/dist'
-    }
+  entry: ['./src/app.js', './src/main.scss'],
+  output: {
+    path: __dirname + '/dist',
+    filename: 'app.bundle.js'
+  },
+  devtool: "source-map",
+  module: {
+    rules: [{
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: [{
+          loader: "css-loader",
+          options: {
+          }
+        // }, {
+        //   loader: 'postcss-loader',
+        //   options: {
+        //     plugins: function () {
+        //       return [
+        //         require('autoprefixer')
+        //       ];
+        //     }
+        //   }
+        }, {
+          loader: "sass-loader",
+          options: {
+          }
+        }]
+      }),
+    }]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/index.html'
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
+    new ExtractTextPlugin("main.css")
+  ],
+  devServer: {
+    contentBase: '/dist'
+  }
 };
