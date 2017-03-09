@@ -17,19 +17,21 @@ module.exports = {
         use: [{
           loader: "css-loader",
           options: {
+            sourceMap: true
           }
-        // }, {
-        //   loader: 'postcss-loader',
-        //   options: {
-        //     plugins: function () {
-        //       return [
-        //         require('autoprefixer')
-        //       ];
-        //     }
-        //   }
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: function () {
+              return [
+                require('autoprefixer')
+              ];
+            }
+          }
         }, {
           loader: "sass-loader",
           options: {
+            sourceMap: true
           }
         }]
       }),
