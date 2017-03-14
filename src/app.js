@@ -4,9 +4,7 @@ import SuperGif from "./lib/libgif";
 
 console.log(SuperGif);
 
-if (!window.location.search) {
-  window.location.href = '?gfycat=AnotherGrandAntarcticfurseal&v=BmPFioq1l6o&s=37&e=89';
-} else {
+if (window.location.search) {
   init(window.location.search);
 }
 
@@ -20,7 +18,7 @@ function init(paramsString) {
   // var videoContainer = document.createElement('div');
   var videoContainer = document.querySelector('#videoContainer');
   videoContainer.setAttribute('class', 'visual-container')
-  
+
   // var audioContainerElement = document.createElement('div');
   var audioContainerElement = document.querySelector('#audioContainer');
   audioContainerElement.setAttribute('class', 'audible-container')
@@ -76,7 +74,7 @@ function init(paramsString) {
     });
 
     videoPlayer.setAttribute('poster', thumbUrl);
-  
+
     appendChildren();
     appendFallbackImage(videoPlayer, thumbUrl);
     setVideoEventListeners(videoPlayer);
@@ -137,7 +135,7 @@ function init(paramsString) {
   }
 
   // 4. The API will call this function when the video player is ready.
-  function onPlayerReady(event) {
+  function onPlayerReady (event) {
       // audioPlayer.seekTo(audioStartTime);
     playAudio()
       // audioPlayer.pauseVideo();
@@ -147,7 +145,7 @@ function init(paramsString) {
   }
 
   // 5. The API calls this function when the player's state changes.    The function indicates that when playing a video (state=1),    the player should play for six seconds and then stop.
-  function onPlayerStateChange(event) {
+  function onPlayerStateChange (event) {
     console.log('event.data', event.data, 'YT.PlayerState', YT.PlayerState)
     if (event.data === YT.PlayerState.CUED) {
       audioReady = true;
@@ -200,7 +198,7 @@ function init(paramsString) {
     audioPlayer.playVideo();
   }
 
-  function stopVideo() {
+  function stopVideo () {
     audioPlayer.stopVideo();
   }
 
@@ -217,12 +215,12 @@ function init(paramsString) {
     pauseAudio();
   }
 
-  function playBoth() {
+  function playBoth () {
     playVideo();
     playAudio();
   }
 
-  function attemptToPlayBoth() {
+  function attemptToPlayBoth () {
     console.log('videoReady', videoReady, 'audioReady', audioReady)
     if (videoReady && audioReady) {
       playBoth();
