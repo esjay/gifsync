@@ -1,27 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GifSync</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GifSync</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta property="og:image" content=""/>
-        <meta property="og:title" content=""/>
-        <meta property="og:url" content=""/>
-        <meta property="og:site_name" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:title" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
 
-        <link rel="shortcut icon" href="favicon.ico"/>
-    </head>
-    <body>
-        <div class="top-thing">
-            <header></header>
-            <div id="videoContainer"></div>
-            <div id="audioContainer"></div>
-        </div>
-        <div class="bottom-thing">
-            <!-->Form F13ldz</!-->
-        </div>
-    </body>
+    <link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body>
+
+<header class="l-header">
+    <div id="videoContainer" class="">
+        I am the video container
+    </div>
+    <div id="audioContainer" class="">
+        I am the audio container
+    </div>
+</header>
+
+<main id="main" role="main" class="l-main">
+
+    <label for="url-video">
+        Video Source
+        <input id="url-video" name="url-video" autocapitalize="off" type="url" />
+    </label>
+
+    <label for="url-audio">
+        Video Source
+        <input id="url-audio" name="url-audio" autocapitalize="off" type="url" />
+    </label>
+
+    <button type="button" name="combine">
+        Combine
+    </button>
+
+</main>
+
+</body>
 </html>
