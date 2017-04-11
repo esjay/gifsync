@@ -1,31 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GifSync</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <meta property="og:image" content=""/>
-    <meta property="og:title" content=""/>
-    <meta property="og:url" content=""/>
+    <meta property="og:image" content="" />
+    <meta property="og:title" content="" />
+    <meta property="og:url" content="" />
     <meta property="og:site_name" content=""/>
 
-    <link rel="shortcut icon" href="favicon.ico"/>
+    <link rel="shortcut icon" href="favicon.ico" />
 </head>
 <body>
 
-<header class="l-header">
+<h1 id="title-gifsync">
+    GifSync
+</h1>
+
+<header
+    id="header"
+    aria-labelledby="subtitle-player"
+    class="l-header"
+    role="banner">
+
+    <h2 id="subtitle-player">
+        Player
+    </h2>
+
     <div id="videoContainer" class="">
         I am the video container
     </div>
+
     <div id="audioContainer" class="">
         I am the audio container
     </div>
+
 </header>
 
-<main id="main" role="main" class="l-main">
+<main
+    id="main"
+    aria-labelledby="subtitle-controls"
+    role="main"
+    class="l-main">
+
+    <h2 id="subtitle-controls">
+        Controls
+    </h2>
 
     <label for="url-video">
         Video Source
@@ -37,11 +60,23 @@
         <input id="url-audio" name="url-audio" autocapitalize="off" type="url" />
     </label>
 
-    <button type="button" name="combine">
+    <button type="button" name="button-combine">
         Combine
     </button>
 
 </main>
+
+<footer
+    id="footer"
+    aria-labelledby="subtitle-footer"
+    role="contentinfo"
+    class="l-footer">
+
+    <h2 id="subtitle-footer">
+        Footer
+    </h2>
+
+</footer>
 
 </body>
 </html>
