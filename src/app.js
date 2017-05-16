@@ -8,7 +8,7 @@ if (window.location.search) {
   init(window.location.search);
 }
 
-function init(paramsString) {
+function init (paramsString) {
   console.log('Location', paramsString);
   var searchParams = new URLSearchParams(paramsString),
       param = searchParams.get.bind(searchParams);
@@ -30,7 +30,7 @@ function init(paramsString) {
 
   console.log('audioEndTime', audioEndTime);
 
-  var videoId, thumbUrl, webmUrl, mp4Url, fallbackUrl;
+  var canonicalVideoUrl = '', videoId, thumbUrl, webmUrl, mp4Url, fallbackUrl;
 
   var videoPlayer = document.createElement('video');
   videoPlayer.setAttribute('muted', '')
@@ -38,6 +38,8 @@ function init(paramsString) {
 
   if (param('gif')) {
     // ****** Any GIF Method ******
+
+    canonicalVideoUrl = param('gif');
 
     appendChildren();
     appendFallbackImage(videoPlayer, param('gif'));
@@ -55,6 +57,8 @@ function init(paramsString) {
 
   } else if (param("gfycat")) {
     // ****** GfyCat Method ******
+
+    canonicalVideoUrl = `//gfycat.com/${param('gfycat')}`
 
     var subdomains = ['zippy', 'fat', 'giant'],
     extensions = ['webm', 'mp4'];
@@ -83,6 +87,9 @@ function init(paramsString) {
 
   }
 
+  document.querySelector('#url-video').value = `${window.location.protocol}${canonicalVideoUrl}`;
+  document.querySelector('#url-audio').value = `${makeYtUrlFromId(param('v'))}`;
+
   function appendFallbackImage (videoPlayer, fallbackUrl) {
     var fallbackImage;
 
@@ -106,7 +113,7 @@ function init(paramsString) {
 
   // 3. This function creates an <iframe> (and YouTube player) after the API code downloads.
   var audioPlayer;
-  window.onYouTubeIframeAPIReady = function onYouTubeIframeAPIReady() {
+  window.onYouTubeIframeAPIReady = function onYouTubeIframeAPIReady () {
     audioPlayer = new YT.Player('audioContainer', {
       height: '320',
       width: '460',
@@ -126,16 +133,40 @@ function init(paramsString) {
 
       },
       events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
+        'onReady': onAudioPlayerReady,
+        'onStateChange': onAudioPlayerStateChange
       }
     });
-    console.log('audioPlayer', audioPlayer, 'audioPlayer.seekTo', audioPlayer.seekTo)
-      // audioPlayer.seekTo(6);
+    
+    if (param('yt')) {
+      videoPlayer = new YT.Player('videoContainer', {
+        height: '320',
+        width: '460',
+        videoId: param('yt'),
+        // startSeconds: 6,
+        //endSeconds: 12,
+        // loop: true,
+        playerVars: {
+          'autoplay': 0,
+          'controls': 1,
+          'loop': 1,
+          'start': videoStartTime,
+          'end': videoEndTime,
+          'modestbranding': 1,
+          'rel': 0,
+          'showinfo': 0,
+
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
   }
 
   // 4. The API will call this function when the video player is ready.
-  function onPlayerReady (event) {
+  function onAudioPlayerReady (event) {
       // audioPlayer.seekTo(audioStartTime);
     playAudio()
       // audioPlayer.pauseVideo();
@@ -145,7 +176,7 @@ function init(paramsString) {
   }
 
   // 5. The API calls this function when the player's state changes.    The function indicates that when playing a video (state=1),    the player should play for six seconds and then stop.
-  function onPlayerStateChange (event) {
+  function onAudioPlayerStateChange (event) {
     console.log('event.data', event.data, 'YT.PlayerState', YT.PlayerState)
     if (event.data === YT.PlayerState.CUED) {
       audioReady = true;
@@ -191,19 +222,23 @@ function init(paramsString) {
   }
 
   function playVideo () {
-    videoPlayer.play();
+    if (param('yt')) {
+      videoPlayer.playVideo();
+    } else {
+      videoPlayer.play();
+    }
   }
 
   function playAudio () {
     audioPlayer.playVideo();
   }
 
-  function stopVideo () {
-    audioPlayer.stopVideo();
-  }
-
   function pauseVideo () {
-    videoPlayer.pause();
+    if (param('yt')) {
+      videoPlayer.pauseVideo();
+    } else {
+      videoPlayer.pause();
+    }
   }
 
   function pauseAudio () {
@@ -233,5 +268,13 @@ function init(paramsString) {
         pauseVideo();
       }
     }
+  }
+
+  function makeYtUrlFromId (ytId) {
+    return `${window.location.protocol}//www.youtube.com/watch?v=${ytId}`
+  }
+
+  function getYtIdFromUrl (ytUrl) {
+    return /.*youtu(?:\.)*be(?:.com)*\/(?:watch\?)*(?:v=)*([^\&\?]*?)(?:$|[&?])/.exec(ytUrl);
   }
 }
