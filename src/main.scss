@@ -172,7 +172,8 @@
 
 // Layout ---------------------------------------------------------------------
 @import
-    "layout/l-layout/l-layout";
+    "layout/l-main/l-main",
+    "layout/l-nav/l-nav";
 
 
 // Objects --------------------------------------------------------------------
@@ -182,7 +183,7 @@
 
 // Components -----------------------------------------------------------------
 @import
-    "components/c-component/c-component",
+    "components/c-embed/c-embed",
     "components/c-skipnav/c-skipnav";
 
 
