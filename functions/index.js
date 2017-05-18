@@ -1,14 +1,15 @@
 var functions = require('firebase-functions');
+var getVisualUrl = require('./parse').getVisualUrl;
 
 // https://firebase.google.com/docs/hosting/functions
 
 exports.preview = functions.https.onRequest((req, res) => {
   res.status(200).send(`<!doctype html>
     <head>
-      <title>${JSON.stringify(req.query)}</title>
+      <title>GifSync</title>
     </head>
     <body>
-      ${JSON.stringify(req.query)}
+      ${getVisualUrl(req.query)}
     </body>
   </html>`);
 });

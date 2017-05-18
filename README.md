@@ -8,9 +8,14 @@ to ensure synchronized visual and audio loops.
 ``` bash
 npm install -g firebase-tools
 ```
-### Serve with Firebase
+### Serve locally with Firebase (hosting + functions)
 ```
-firebase serve
+firebase serve --except none
+```
+
+### Deploy cloud functions and hosted site to Firebase
+```
+firebase deploy
 ```
 
 ## Project Development
@@ -28,3 +33,6 @@ npm run dev
 ```
 npm run build
 ```
+
+### Requirements
+- Firebase currently deploys Cloud Functions to a server running Node v3.9.1
