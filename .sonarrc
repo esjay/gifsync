@@ -1,0 +1,26 @@
+{
+    "browserslist": "",
+    "collector": {
+        "name": "cdp",
+        "options": {}
+    },
+    "formatter": "codeframe",
+    "ignoredUrls": {},
+    "rules": {
+        "axe": "error",
+        "content-type": "error",
+        "disallowed-headers": "error",
+        "disown-opener": "error",
+        "highest-available-document-mode": "error",
+        "manifest-exists": "error",
+        "manifest-file-extension": "error",
+        "manifest-is-valid": "error",
+        "meta-charset-utf-8": "error",
+        "no-friendly-error-pages": "error",
+        "no-html-only-headers": "error",
+        "no-protocol-relative-urls": "error",
+        "ssllabs": "error",
+        "x-content-type-options": "error"
+    },
+    "rulesTimeout": 120000
+}

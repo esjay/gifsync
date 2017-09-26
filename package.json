@@ -27,6 +27,7 @@
     "youtube-player": "^3.0.4"
   },
   "devDependencies": {
+    "@sonarwhal/sonar": "0.0.2",
     "autoprefixer": "^6.7.5",
     "css-loader": "^0.26.2",
     "extract-text-webpack-plugin": "^2.0.0",

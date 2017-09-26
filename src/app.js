@@ -1,6 +1,7 @@
 'use strict';
 
 import SuperGif from "./lib/libgif";
+// import {getVisualUrl} from '../shared/parse';
 
 console.log(SuperGif);
 
