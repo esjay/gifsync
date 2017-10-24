@@ -1,9 +1,5 @@
 'use strict';
 
-import SuperGif from "./lib/libgif";
-
-console.log(SuperGif);
-
 if (window.location.search) {
   init(window.location.search);
 }
@@ -36,26 +32,7 @@ function init (paramsString) {
   videoPlayer.setAttribute('muted', '')
   videoPlayer.setAttribute('loop', '');
 
-  if (param('gif')) {
-    // ****** Any GIF Method ******
-
-    canonicalVideoUrl = param('gif');
-
-    appendChildren();
-    appendFallbackImage(videoPlayer, param('gif'));
-
-    videoPlayer = new SuperGif({
-      gif: videoPlayer,
-      show_progress_bar: false,
-      auto_play: 0
-    } );
-    videoPlayer.load_url(param('gif'), attemptToPlayBoth);
-
-    // <a href="javascript:;" onmousedown="sup1.pause(); return false;">Pause</a> |
-    // <a href="javascript:;" onmousedown="sup1.play(); return false;">Play</a> |
-    // <a href="javascript:;" onmousedown="sup1.move_to(0); return false;">Restart</a> |
-
-  } else if (param("gfycat")) {
+  if (param("gfycat")) {
     // ****** GfyCat Method ******
 
     canonicalVideoUrl = `//gfycat.com/${param('gfycat')}`
@@ -137,7 +114,7 @@ function init (paramsString) {
         'onStateChange': onAudioPlayerStateChange
       }
     });
-    
+
     if (param('yt')) {
       videoPlayer = new YT.Player('videoContainer', {
         height: '320',
