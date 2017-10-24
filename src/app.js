@@ -1,13 +1,16 @@
 'use strict';
 
+import gfycat from './services/gfycat';
+import param from './utils/params';
+
+console.log('gfycat', gfycat);
+
 if (window.location.search) {
   init(window.location.search);
 }
 
 function init (paramsString) {
   console.log('Location', paramsString);
-  var searchParams = new URLSearchParams(paramsString),
-      param = searchParams.get.bind(searchParams);
 
   var body = document.querySelector('body');
 
@@ -33,32 +36,12 @@ function init (paramsString) {
   videoPlayer.setAttribute('loop', '');
 
   if (param("gfycat")) {
-    // ****** GfyCat Method ******
+    let videoElement = gfycat.getVideoElement(),
+        thumbUrl = gfycat.getThumbnailUrl();
 
-    canonicalVideoUrl = `//gfycat.com/${param('gfycat')}`
-
-    var subdomains = ['zippy', 'fat', 'giant'],
-    extensions = ['webm', 'mp4'];
-    videoId = param("gfycat");
-
-    thumbUrl = '//thumbs.gfycat.com/' + videoId + '-poster.jpg';
-
-    extensions.forEach(function (ext) {
-      subdomains.forEach(function (sd) {
-        var sourceUrl = '//' + sd + '.gfycat.com/' + videoId + '.' + ext;
-        var sourceElement = document.createElement('source');
-        sourceElement.setAttribute('src', sourceUrl);
-        sourceElement.setAttribute('type', 'video/' + ext);
-
-        videoPlayer.appendChild(sourceElement);
-      })
-    });
-
-    videoPlayer.setAttribute('poster', thumbUrl);
-
-    appendChildren();
-    appendFallbackImage(videoPlayer, thumbUrl);
-    setVideoEventListeners(videoPlayer);
+    appendVideo(videoElement);
+    appendFallbackImage(videoElement, thumbUrl);
+    setVideoEventListeners(videoElement);
   } else if (param('yt')) {
     // ****** YouTube Visual Method ******
 
@@ -177,8 +160,8 @@ function init (paramsString) {
     }
   }
 
-  function appendChildren () {
-    videoContainer.appendChild(videoPlayer);
+  function appendVideo (element) {
+    videoContainer.appendChild(element);
 
     // body.insertBefore(audioContainerElement, body.firstChild);
     // body.insertBefore(videoContainer, body.firstChild);

@@ -10,7 +10,7 @@ module.exports = {
     path: __dirname + '/dist',
     filename: 'app.bundle.js'
   },
-  devtool: "source-map",
+  devtool: 'hidden-source-map',
   module: {
     rules: [
       {
