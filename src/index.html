@@ -9,84 +9,71 @@
 </head>
 <body>
 
-<h1 id="title-gifsync"
-    class="content-hide-visually">
-    GifSync
-</h1>
+<aside id="banner" class="l-banner">
+    <h1 class="c-banner__title">
+        gifsync
+    </h1>
+    <p class="c-banner__subtitle">
+        Sync videos and gifs to audio
+    </p>
+    <p class="c-banner__stinger">
+        No really
+    </p>
+</aside>
 
-<!-- Start of main -->
-<main
-    id="main"
-    aria-labelledby="subtitle-player"
-    class="l-main"
-    role="main">
+<main id="main">
+    <!-- Start of video input -->
+    <section aria-label="Video source" class="input-controls">
+        <label for="video-source">
+            Video Source <span>Supported sites</span>
+            <input
+                placeholder="Paste URL here"
+                type="url"
+                name="video-source"
+                value="" />
+        </label>
 
-    <h2 id="subtitle-player"
-        class="content-hide-visually">
-        Player
-    </h2>
+        <label for="video-start-time">
+            Start time
+            <input
+                type="tel"
+                name="video-start-time"
+                value="0" />
+        </label>
+        <span>1 min = 60s</span>
 
-    <div id="videoContainer"
-        class="c-embed--video">
-
-        <button class="button js-button">
-            <svg width="100%" height="100%" viewBox="0 0 36 36">
-                <defs>
-                    <path id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
-                    <path id="play-icon" data-state="paused" d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
-                </defs>
-                <use xlink:href="#play-icon" />
-            </svg>
+        <button type="button" name="video-options">
+            Additional options
         </button>
+    </section>
+    <!-- End of video input -->
 
+    <!-- Start of audio input -->
+    <section aria-label="Audio source" class="input-controls">
+        <label for="audio-source">
+            Audio Source <span>Supported sites</span>
+            <input
+                placeholder="Paste URL here"
+                type="url"
+                name="audio-source"
+                value="" />
+        </label>
 
-    </div>
+        <label for="audio-start-time">
+            Start time
+            <input
+                type="tel"
+                name="audio-start-time"
+                value="0" />
+        </label>
+        <span>1 min = 60s</span>
 
-    <div id="audioContainer" class="">
-    </div>
-
+        <button type="button" name="audio-options">
+            Additional options
+        </button>
+    </section>
+    <!-- End of audio input -->
 </main>
-
-<!-- Start of nav -->
-<nav
-    id="nav"
-    aria-labelledby="subtitle-controls"
-    role="navigation"
-    class="l-nav">
-
-    <h2 id="subtitle-controls"
-        class="content-hide-visually">
-        Controls
-    </h2>
-
-    <label for="url-video">
-        Video Source
-        <input id="url-video" name="url-video" autocapitalize="off" type="url" />
-    </label>
-
-    <label for="url-audio">
-        Audio Source
-        <input id="url-audio" name="url-audio" autocapitalize="off" type="url" />
-    </label>
-
-    <button type="button" name="button-combine">
-        Combine
-    </button>
-
-</nav>
-
-<!-- Start of footer -->
-<footer
-    id="footer"
-    aria-labelledby="subtitle-footer"
-    role="contentinfo"
-    class="l-footer">
-
-    <h2 id="subtitle-footer">
-        Footer
-    </h2>
-
-</footer>
 
 </body>
 </html>

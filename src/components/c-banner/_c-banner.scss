@@ -1,0 +1,17 @@
+.c-banner {
+    &__title {
+        font-weight: $font-weight-normal;
+    }
+
+    &__subtitle {
+        margin-bottom: ms(0.5, rem);
+    }
+
+    &__stinger {
+        @include typography-tracking(loose);
+
+        color: c(link, base);
+        text-transform: uppercase;
+        font-size: ms(0.5, em);
+    }
+}
