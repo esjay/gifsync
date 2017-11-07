@@ -14,11 +14,11 @@
 @import
     "utilities/variables/meta",
     "utilities/variables/paths",
-    "utilities/variables/symbols",
     "utilities/variables/font.families",
     "utilities/variables/font.weights",
     "utilities/variables/ratios",
-    "utilities/variables/supports";
+    "utilities/variables/supports",
+    "utilities/variables/symbols";
 
 
 // Maps -----------------------------------------------------------------------
@@ -40,11 +40,6 @@
 @import
     "config",
     "toggles";
-
-
-// Imports --------------------------------------------------------------------
-@import
-    "utilities/imports/typefaces";
 
 
 // Functions ------------------------------------------------------------------
@@ -87,17 +82,7 @@
     "utilities/mixins/content.text-truncate",
     "utilities/mixins/content.underline",
 
-    "utilities/mixins/form.border",
-    "utilities/mixins/form.input-padding",
-    "utilities/mixins/form.label-distance",
-    "utilities/mixins/form.multi-line-input",
-    "utilities/mixins/form.placeholder",
-    "utilities/mixins/form.states",
-    "utilities/mixins/form.width",
-
     "utilities/mixins/generate.circle",
-    "utilities/mixins/generate.high-contrast-border",
-    "utilities/mixins/generate.list-semantics",
     "utilities/mixins/generate.pause",
     "utilities/mixins/generate.triangle",
     "utilities/mixins/generate.unicode-symbol",
@@ -123,7 +108,6 @@
     "utilities/mixins/typography.numbers-tabular",
     "utilities/mixins/typography.ordinals",
     "utilities/mixins/typography.preload-adjustments",
-    "utilities/mixins/typography.responsive",
     "utilities/mixins/typography.scientific-inferiors",
     "utilities/mixins/typography.small-caps",
     "utilities/mixins/typography.smoothing",
@@ -157,41 +141,31 @@
     "base/root",
     "base/html",
     "base/body",
-    "base/breakpoint-names",
     "base/global-attributes";
 
 // Elements -------------------------------------------------------------------
 @import
-    "elements/code",
-    "elements/headings",
-    "elements/hr",
     "elements/links",
-    "elements/lists",
-    "elements/paragraphs",
-    "elements/quotes",
-    "elements/tables",
-    "elements/text-level",
-
-    "elements/embeds",
+    "elements/headings",
     "elements/icons",
+    "elements/paragraphs",
+    "elements/lists",
     "elements/images",
-    "elements/media",
-
-    "elements/labels",
-    "elements/buttons",
-    "elements/checkboxes-radios",
-    "elements/fieldset",
+    "elements/tables",
     "elements/forms",
-    "elements/inputs",
-    "elements/legend",
-    "elements/output",
-    "elements/selects",
-    "elements/textarea";
+    "elements/buttons",
+    "elements/text-level",
+    "elements/quotes",
+    "elements/code",
+    "elements/hr",
+    "elements/media",
+    "elements/embeds";
 
 
 // Layout ---------------------------------------------------------------------
 // @import
-//     "layout/l-layout/l-layout";
+//     "layout/l-main/l-main",
+//     "layout/l-nav/l-nav";
 
 
 // Objects --------------------------------------------------------------------
@@ -200,18 +174,15 @@
 
 
 // Components -----------------------------------------------------------------
-@import
-    "components/c-skipnav/c-skipnav";
-
-
-// Media ----------------------------------------------------------------------
-@import
-    "meta/media/print";
+// @import
+//     "components/c-embed/c-embed",
+//     "components/c-skipnav/c-skipnav";
 
 
 // Shame ----------------------------------------------------------------------
 // These are styles that override other styles, and should be used very
-// sparingly. Strive to refactor when time permits.
+// sparingly. This is the only place where `!important` should be used. Strive
+// to refactor when time permits.
 // http://csswizardry.com/2013/04/shame-css/
 @import
     "shame";
