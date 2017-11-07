@@ -1,5 +1,3 @@
-'use strict';
-
 import gfycat from './services/gfycat';
 import param from './utils/params';
 
@@ -12,43 +10,45 @@ if (window.location.search) {
 function init (paramsString) {
   console.log('Location', paramsString);
 
-  var body = document.querySelector('body');
+  const body = document.querySelector('body');
 
   // var videoContainer = document.createElement('div');
-  var videoContainer = document.querySelector('#videoContainer');
+  const videoContainer = document.querySelector('#videoContainer');
   videoContainer.setAttribute('class', 'visual-container')
 
   // var audioContainerElement = document.createElement('div');
-  var audioContainerElement = document.querySelector('#audioContainer');
+const audioContainerElement = document.querySelector('#audioContainer');
   audioContainerElement.setAttribute('class', 'audible-container')
   // audioContainerElement.setAttribute('id', 'audioContainer')
 
-  var audioId = param('v'),
+  let audioId = param('v'),
       audioStartTime = parseFloat(param('s')),
       audioEndTime = parseFloat(param('e'));
 
   console.log('audioEndTime', audioEndTime);
 
-  var canonicalVideoUrl = '', videoId, thumbUrl, webmUrl, mp4Url, fallbackUrl;
+  let canonicalVideoUrl = '', videoId, webmUrl, mp4Url, fallbackUrl;
 
   var videoPlayer = document.createElement('video');
   videoPlayer.setAttribute('muted', '')
   videoPlayer.setAttribute('loop', '');
 
   if (param("gfycat")) {
-    let videoElement = gfycat.getVideoElement(),
-        thumbUrl = gfycat.getThumbnailUrl();
+    let videoElement      = gfycat.getVideoElement(),
+        thumbUrl          = gfycat.getThumbnailUrl(),
+        canonicalVideoUrl = gfycat.getCanonicalVideoUrl();
 
-    appendVideo(videoElement);
     appendFallbackImage(videoElement, thumbUrl);
     setVideoEventListeners(videoElement);
+    setVideoSourceUrl(canonicalVideoUrl);
+    appendVideo(videoElement);
   } else if (param('yt')) {
     // ****** YouTube Visual Method ******
 
   }
 
-  document.querySelector('#url-video').value = `${window.location.protocol}${canonicalVideoUrl}`;
-  document.querySelector('#url-audio').value = `${makeYtUrlFromId(param('v'))}`;
+
+  setAudioSourceUrl(makeYtUrlFromId);
 
   function appendFallbackImage (videoPlayer, fallbackUrl) {
     var fallbackImage;
@@ -78,9 +78,6 @@ function init (paramsString) {
       height: '320',
       width: '460',
       videoId: audioId,
-      // startSeconds: 6,
-      //endSeconds: 12,
-      // loop: true,
       playerVars: {
         'autoplay': 0,
         'controls': 1,
@@ -103,9 +100,6 @@ function init (paramsString) {
         height: '320',
         width: '460',
         videoId: param('yt'),
-        // startSeconds: 6,
-        //endSeconds: 12,
-        // loop: true,
         playerVars: {
           'autoplay': 0,
           'controls': 1,
@@ -218,15 +212,17 @@ function init (paramsString) {
   function attemptToPlayBoth () {
     console.log('videoReady', videoReady, 'audioReady', audioReady)
     if (videoReady && audioReady) {
+      console.log('playing both video and audio');
       playBoth();
-      console.time('audioPlayer');
-    } else {
-      if (audioReady) {
-        pauseAudio();
-      }
-      if (videoReady) {
-        pauseVideo();
-      }
+    // } else {
+    //   if (audioReady) {
+    //     console.log('audio ready, pausing until video ready');
+    //     // pauseAudio();
+    //   }
+    //   if (videoReady) {
+    //     console.log('video ready, pausing until audio ready');
+    //     // pauseVideo();
+    //   }
     }
   }
 
@@ -238,3 +234,11 @@ function init (paramsString) {
     return /.*youtu(?:\.)*be(?:.com)*\/(?:watch\?)*(?:v=)*([^\&\?]*?)(?:$|[&?])/.exec(ytUrl);
   }
 }
+function setAudioSourceUrl(makeYtUrlFromId) {
+  document.querySelector('[name="audio-source"]').value = `${makeYtUrlFromId(param('v'))}`;
+}
+
+function setVideoSourceUrl(canonicalVideoUrl) {
+  document.querySelector('[name="video-source"]').value = `${window.location.protocol}${canonicalVideoUrl}`;
+}
+

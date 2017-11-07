@@ -8,9 +8,10 @@ module.exports = {
   entry: ['./src/app.js', './src/main.scss'],
   output: {
     path: __dirname + '/dist',
-    filename: 'app.bundle.js'
+    filename: 'app.bundle.js',
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]'
   },
-  devtool: 'hidden-source-map',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       {
