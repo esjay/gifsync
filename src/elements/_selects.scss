@@ -1,0 +1,54 @@
+// Select
+//
+// Represents a control for selecting amongst a set of options.
+//
+// Markup:
+// <label data-custom-select for="avocado-type">
+//   Avocado type
+//   <select id="avocado-type" name="avocado-type">
+//     <option value="fuerte">Fuerte</option>
+//     <option value="gwen">Gwen</option>
+//     <option value="hass">Hass</option>
+//     <option value="pinkerton">Pinkerton</option>
+//     <option value="reed">Reed</option>
+//     <option value="zutano">Zutano</option>
+//   </select>
+// </label>
+//
+// Styleguide Elements.Forms.Select
+select {
+    @include form-border();
+    @include form-input-padding();
+    @include form-label-distance();
+    @include form-state(input);
+    @include form-width();
+
+    border-radius: 0;
+
+    background-color: c(base, background);
+
+    line-height: 1;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &[multiple] {
+        @include form-multi-line-input;
+
+        padding: 0; // Undoes `form-input-padding()` so <option>s extend full-width
+
+        option {
+            padding: ms(0.4, em); // Highlights entire <option> row when selected
+        }
+    }
+}
+
+
+select optgroup {
+    font-weight: $font-weight-bold; // Creates distinction between optgroup and option
+}
+
+
+select option {
+    font-weight: $font-weight-normal; // Creates distinction between optgroup and option
+}

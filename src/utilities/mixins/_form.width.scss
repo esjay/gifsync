@@ -1,0 +1,25 @@
+// FORM
+// Width
+
+
+/// Adds consistent width and display for all for all form elements.
+///
+/// @group Forms
+///
+/// @example scss
+///  @include form-width();
+
+
+@mixin form-width() {
+    display: block;
+    width: 100%;
+}
+
+
+// TOGGLES
+// Enables functional class toggles. See `_config.scss`
+@if $toggle-form-width == true {
+    .form-width {
+        @include form-width();
+    }
+}

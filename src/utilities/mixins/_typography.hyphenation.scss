@@ -1,0 +1,31 @@
+// TYPOGRAPHY
+// Hyphenation
+
+
+/// Use `&shy;` to  insert a hyphenation hint.
+///
+/// @group Typography
+///
+/// @example scss
+///  @include typography-hyphenation();
+
+
+@mixin typography-hyphenation() {
+    word-break: break-word;
+    hyphens: auto;
+}
+
+
+// TOGGLES
+// Enables functional class toggles. See `_config.scss`
+@if $toggle-typography-hyphenation-add == true {
+    .typography-hyphenation-add {
+        @include typography-hyphenation(add);
+    }
+}
+
+@if $toggle-typography-hyphenation-remove == true {
+    .typography-hyphenation-remove {
+        @include typography-hyphenation(remove);
+    }
+}
