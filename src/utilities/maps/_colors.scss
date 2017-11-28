@@ -53,9 +53,8 @@ $colors: (
 
     // HEADINGS
     heading: (
-        base: #111111,
-        odd:  #9b9b9b,
-        even: #4a4a4a
+        title: #45c1ff,
+        base:  #111111
     ),
 
     // BUTTONS
@@ -75,11 +74,10 @@ $colors: (
         focus:  #9b9b9b,
         active: #9b9b9b,
         busy:   #9b9b9b
-    )
+    ),
 
     // COMPONENT
-//    c-component: (
-//        subcomponent: value,
-//        subcomponent: value
-//    )
+   c-autoplay: (
+       background: hsla(0, 0%, 29%, 0.75)
+   )
 );

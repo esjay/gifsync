@@ -1,0 +1,20 @@
+.c-autoplay {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    background-color: c(c-autoplay, background);
+
+position: relative;
+top: 450px;
+height: 200px;
+width: 100%;
+
+    &__button {
+        @include component-style-reset();
+    }
+
+    &__icon {
+fill: #45c1ff;
+    }
+}
