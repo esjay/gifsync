@@ -1,5 +1,6 @@
 .c-banner {
     &__title {
+        color: c(heading, title);
         font-weight: $font-weight-normal;
     }
 
@@ -8,6 +9,7 @@
     }
 
     &__stinger {
+        @include typography-smoothing(light-on-dark);
         @include typography-tracking(loose);
 
         color: c(link, base);

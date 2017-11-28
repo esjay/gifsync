@@ -21,22 +21,26 @@
     </p>
 </aside>
 
-<main id="main">
-    <section>
+<main id="main" class="l-main">
+
+    <section class="blarb">
         <h2 id="subtitle-player" class="content-hide-visually">
             Player
         </h2>
 
-        <div id="videoContainer" class="c-embed--video">
-            <button class="button js-button">
-                <svg width="100%" height="100%" viewBox="0 0 36 36">
-                    <defs>
-                        <path id="pause-icon" data-state="playing" d="M11,10 L17,10 17,26 11,26 M20,10 L26,10 26,26 20,26" />
-                        <path id="play-icon" data-state="paused" d="M11,10 L18,13.74 18,22.28 11,26 M18,13.74 L26,18 26,18 18,22.28" />
-                    </defs>
-                    <use xlink:href="#play-icon" />
-                </svg>
-            </button>
+        <div id="videoContainer" class="">
+            <div class="c-autoplay" style="height: 450px;">
+                <button class="c-autoplay__button js-button">
+                    <svg class="c-autoplay__icon" width="91" height="68" viewBox="0 0 91 68" xmlns="http://www.w3.org/2000/svg">
+                        <title>Play</title>
+                        <g fill-rule="evenodd">
+                            <path d="M0 9v50c0 5 4 9 9 9h72.3c5 0 9-4 9-9V9c0-5-4-9-9-9H9C4.1 0 0 4 0 9zm57.2 29.2l-19 10.9-7.3 4.1V14.8l7.3 4.1 19 10.9 7.3 4.2-7.3 4.2z" fill-rule="nonzero"/>
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <img src="http://via.placeholder.com/800x450" />
         </div>
 
         <div id="audioContainer" class="">
