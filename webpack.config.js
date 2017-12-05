@@ -11,7 +11,7 @@ module.exports = {
     filename: 'app.bundle.js',
     devtoolModuleFilenameTemplate: '[absolute-resource-path]'
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {

@@ -4,17 +4,35 @@
     justify-content: center;
 
     background-color: c(c-autoplay, background);
-
-position: relative;
-top: 450px;
-height: 200px;
-width: 100%;
+    position: relative;
+    overflow: hidden;
 
     &__button {
         @include component-style-reset();
+        background: rgba(0,0,0,.5);
+        transition: .15s background, fill;
+
+        &:hover {
+            background: transparent;
+            cursor: pointer;
+
+            .c-autoplay__icon {
+                fill: darken(#45c1ff, 20%);
+            }
+        }
+        &:focus, &:active {
+            background: inherit;
+        }
+
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+
     }
 
     &__icon {
-fill: #45c1ff;
+        fill: #45c1ff;
+        @include component-centerize();
     }
 }
